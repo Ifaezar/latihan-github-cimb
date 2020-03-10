@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        <strong style ="font-size:55px" >Hello, Saya Luffy &#128541</strong>
+    </p>
+    <img src= "luffy.jpeg" height="250" width="300"/>
+    <p>
+        saya adalah bajak laut yang ingin menjadi raja bajak laut 
+        
+    </p>
+    <p>
+            <a style="color: blue " href= "http://127.0.0.1:5500/exercise9.html" > Gear Second  </a>
+    </p>
+    
+    <p>
+            <strong style = font-size:45px>Contact Me Here</strong>
+            <ul >
+                <li><a style="color: blue " href= "https://github.com/Ifaezar" > Github  </a></li>
+                <li><a style="color: blue " href= "https://twitter.com/" > Twitter  </a></li>
+                <li><a style="color: blue " href= "https://www.instagram.com/?hl=id" > instagram  </a></li>
+            </ul>
+    </p>
+</body>
+</html>

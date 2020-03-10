@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Item {
+            constructor(paramItem, paramStok, paramHarga, paramInput){
+                this.nama = paramItem
+                this.stok = paramStok
+                this.harga = paramHarga
+                this.input = paramInput
+            }
+        }
+
+        class Buah extends Item{
+            constructor(paramItem, paramStok, paramHarga, paramInput, paramExpired){
+                super(paramItem, paramStok, paramHarga, paramInput)
+                this.expired = paramExpired
+            }
+        }
+        
+        class Clothing extends Item{
+            constructor(paramItem, paramStok, paramHarga, paramInput, paramSize){
+                super(paramItem, paramStok, paramHarga, paramInput)
+                this.size = paramSize
+                
+            }
+        }
+
+        class HP extends Item{
+            constructor(paramItem, paramStok, paramHarga, paramInput, paramGaransi){
+                super(paramItem, paramStok, paramHarga, paramInput)
+                this.garansi = paramGaransi
+            }
+        }
+        
+        let tokoClothing = [
+            new Clothing("Kaos", 5, 10000, 0, "L"),
+            new Clothing("Kemeja", 10, 10000, 0, "M"),
+            new Clothing("Jacket", 3, 20000, 0, "XL"),
+            new Clothing("Hoodie", 5, 20000, 0, "L")
+        ]
+        
+        let tokoBuah = [
+            new Buah("Apel", 3, 1000, 0, ("2011-2-29")),
+            new Buah("Mangga", 10, 5000, 0, ("2021-1-10")),
+            new Buah("Semangka", 5, 6000, 0, ("2019-2-11")),
+            new Buah("Durian", 2, 10000, 0, ("2021-2-10"))
+        ]
+
+        let tokoHP = [
+            new HP("Samsung", 13, 500000, 0, 2 ),
+            new HP("Sony", 2, 500000, 0, 0),
+            new HP("Nokia", 2, 200000, 0, 0),
+            new HP("Iphone", 12, 6000000, 0, 2)
+        ]
+        
+        let kondisi, kondisi2, kondisi3, kondisiUtama
+        let pilihMenuUser
+        let pilihMenuBuah
+        let inputUserMenuIndex
+        let kosong
+        let hargatotal
+        let temp = 0
+        let chart = ''
+        let chartcount
+        let Bayar
+        let choose
+        let hapusItemBuah
+        let arrBulan
+        let pilihmenuAdd
+        let konfirm
+        let totalHargaSemua
+
+        function konfirmasi(){
+            konfirm = confirm("Apakah anda mau membeli lagi?")
+            if (konfirm == true){
+                menuUser()
+            }else{
+                kondisi = false
+            }
+        }
+        function menuUtama(){
+            do{
+                memilihMenu = prompt("Login Sebagai \n\n 1. Admin \n 2. User")
+                if (memilihMenu == 1){
+                    menuAdmin()
+                    kondisi = true
+                }else {
+                    menuUser()
+                    kondisi = false
+                }
+            }while (kondisi)
+        }
+        function menuAdmin(){
+            choose = prompt("1. Tambah Item \n 2. Delete Item \n 3. Show Item \n 4. back")
+            if (choose == 1)
+            {
+                menuAdd()
+            }else if (choose == 2) {
+                deleteItem()
+            }else if(choose == 3){
+                pilihShowMenu = prompt("Item yang mau ditampilkan \n 1. Buah \n 2. Pakaian \n 3. HP")
+                if(pilihShowMenu == 1){
+                    showMenuBuah()
+                }else if(pilihShowMenu ==2){
+                    showMenuPakaian()
+                }else{
+                    showMenuHp()
+                }
+            }else{
+                menuUtama()
+            }
+        }
+        function menuAdd(){
+            pilihmenuAdd = prompt("Item yang mau ditambah \n 1. Buah \n 2. Clothing \n 3. HP")
+            if (pilihmenuAdd == 1){
+            tokoBuah.push({
+                nama: prompt("Masukkan Nama Buah"),
+                stok: prompt("Masukkan Jumlah Stok"),
+                harga: prompt("Masukkan Harga Buah"),
+                expired: prompt("Masukkan Tanggal Expired (YYYY-M-DD)"),
+                input: 0,
+            })
+            }else if(pilihmenuAdd == 2){
+                tokoClothing.push({
+                nama: prompt("Masukkan Nama Clothing"),
+                stok: prompt("Masukkan Jumlah Stok"),
+                harga: prompt("Masukkan Harga Clothing"),
+                size: prompt("Masukan Size Pakaian"),
+                input: 0,
+            })
+            }else{
+                tokoHP.push({
+                nama: prompt("Masukkan Nama HP"),
+                stok: prompt("Masukkan Jumlah Stok"),
+                harga: prompt("Masukkan Harga HP"),
+                garansi: prompt("Masukan Garansi HP"),
+                input: 0,
+            })
+            }
+
+            menuAdmin()
+        }
+        function deleteItem(){
+            pilihMenuDelete = prompt("Masukkan Item yang mau dihapus \n 1. Buah \n 2. Clothing \n 3. HP")
+            if (pilihMenuDelete == 1){
+            showMenuBuah()
+            hapusItemBuah = prompt("Buah yang mau dihapus")
+            for (let i = 0; i < tokoBuah.length; i++){
+                if (tokoBuah[i].nama.toLowerCase() == hapusItemBuah.toLowerCase()){
+                    tokoBuah.splice(i,1) 
+                    alert("Data Berhasil Dihapus")  
+                    menuAdmin()
+                }
+            }
+            alert("Data tidak ada")
+            deleteItem()
+            }else if (pilihMenuDelete == 2){
+            showMenuPakaian()
+            hapusItemBuah = prompt("Pakaian yang mau dihapus")
+            for (let i = 0; i < tokoClothing.length; i++){
+                if (tokoClothing[i].nama == hapusItemBuah){
+                    tokoClothing.splice(i,1) 
+                    alert("Data Berhasil Dihapus")  
+                    menuAdmin()
+                }
+            }
+            alert("Data tidak ada")
+            deleteItem()  
+            }else{
+            showMenuHp()
+            hapusItemBuah = prompt("HP yang mau dihapus")
+            for (let i = 0; i < tokoHP.length; i++){
+                if (tokoHP[i].nama == hapusItemBuah){
+                    tokoHP.splice(i,1) 
+                    alert("Data Berhasil Dihapus")  
+                    menuAdmin()
+                }
+            }
+            alert("Data tidak ada")
+            deleteItem()
+            }
+
+        }
+        function menuUser(){    
+            do{
+                pilihMenuUser = prompt("Item yang tersedia \n\n 1. Buah \n 2. Pakaian \n 3. Hp \n 4. Checkout \n 5. Daftar Keranjang")
+                if(pilihMenuUser == 1){
+                    menuBuah()
+                    kondisi = true
+                }else if(pilihMenuUser == 2){
+                    menuPakaian()
+                    kondisi = true
+                }else if(pilihMenuUser == 3){
+                    menuHp()
+                    kondisi = true
+                }else if(pilihMenuUser == 4){
+                    menuCheckoutSemua(
+                        kondisi = true
+                    )
+                }else if(pilihMenuUser == 5){
+                    menuDaftarKeranjangSemua()
+                    kondisi = true
+                }
+            }while(kondisi)
+        }
+        function menuDaftarKeranjangSemua(){
+           chart =''
+           chartcount = 0
+           for (let i = 0; i < tokoBuah.length; i++){
+               if(tokoBuah[i].input > 0){
+                   chart += `${tokoBuah[i].nama}  ${tokoBuah[i].input} pcs\n`
+                   chartcount = 1
+                }
+            }
+           for (let i = 0; i < tokoClothing.length; i++){
+               if(tokoClothing[i].input > 0){
+                   chart += `${tokoClothing[i].nama}  ${tokoClothing[i].input} pcs\n`
+                   chartcount = 1
+                }
+            }
+            for (let i = 0; i < tokoHP.length; i++){
+               if(tokoHP[i].input > 0){
+                   chart += `${tokoHP[i].nama}  ${tokoHP[i].input} pcs\n`
+                   chartcount = 1
+                }
+            }
+
+            if (chartcount == 0 && tokoClothing.length-1){
+                alert("Anda Belum Membeli apapun")
+            }else{
+                alert(chart)
+            }
+        }
+        function menuCheckoutSemua(){
+            alert (`Barang yang anda beli
+            1. Buah Rp${totalHarga()}
+            2. Clothing RP${totalHargaPakaian()}
+            3. HP Rp${totalHargaHP()}`)
+            totalHargaSemua = totalHarga() + totalHargaHP() + totalHargaPakaian()
+            alert(`Total Belanja yang harus dibayar adalah Rp${totalHargaSemua}`)
+            do{
+                    Bayar = parseInt(prompt("Silahkan Masukkan Jumlah Uang Anda"))
+                        if (Bayar < totalHargaSemua){
+                            alert(`Mohon Maaf Uang Anda Kurang Rp${Bayar-totalHargaSemua}`)
+                            totalHargaSemua = 0
+                            kondisi3 = true
+                         
+                        }else if (Bayar > totalHargaSemua){
+                            alert(`Terima Kasih sudah membeli , kembalian anda Rp${Bayar-totalHargaSemua}`)
+                            totalHargaSemua = 0
+                            konfirmasi()
+                        }else if(Bayar == totalHargaSemua){
+                            alert("Terima Kasih sudah membeli")
+                            konfirmasi()
+                        }
+                    }while (kondisi3)
+        }
+        //menu buah
+        function showMenuBuah(){
+            menu = ''
+            for (let i = 0 ; i < tokoBuah.length; i++){
+            menu += `${i+1} ${tokoBuah[i].nama} Rp${tokoBuah[i].harga} ${tokoBuah[i].stok} /pcs expired ${tokoBuah[i].expired}\n`
+        } alert(menu) 
+        }
+        function menuBuah(){
+       
+        date = new Date()
+        hari = date.getDate()
+        bulan = date.getMonth()
+        tahun = date.getFullYear()
+        date = (`${tahun}-${bulan+1}-${hari}`)
+        
+        showMenuBuah()
+        
+
+            pilihMenuBuah = prompt(`Buah Yang Tersedia \n\n ${menu} `)
+            inputMenuBuah()
+            if (pilihMenuBuah == tokoBuah.length+1){
+                menuDaftarKeranjangBuah()
+            }
+            if(pilihMenuBuah == tokoBuah.length+2){
+                menuCheckoutBuah()
+                konfirmasi = confirm("mau beli lagi?") 
+            }
+       
+        }
+        function inputMenuBuah(){
+            inputUserMenuIndex = pilihMenuBuah-1
+            if (pilihMenuBuah <= tokoBuah.length){
+                if(tokoBuah[inputUserMenuIndex].expired >= date){
+                do{
+                    kosong = parseInt(prompt(`Beli ${tokoBuah[inputUserMenuIndex].nama} Berapa`))
+                    temp += kosong
+                    if (temp  <= tokoBuah[inputUserMenuIndex].stok){
+                        tokoBuah[inputUserMenuIndex].input += kosong
+                        tokoBuah[inputUserMenuIndex].stok -= tokoBuah[inputUserMenuIndex].input
+                        kondisi = true
+                        kondisi2 = false
+                    }else{
+                        alert("Mohon Maaf Stok yang anda masukkan terlalu banyak")
+                        temp = 0
+                        kondisi2 = true
+                        }
+                }while (kondisi2)
+                }else{
+                    alert(`Mohon Maaf Buah ${tokoBuah[inputUserMenuIndex].nama} telah kadaluarsa`)
+                }
+            }
+        }
+        function totalHarga(){
+            hargatotal = 0
+            for(let i = 0; i< tokoBuah.length; i++){
+                hargatotal += tokoBuah[i].harga * tokoBuah[i].input
+            }
+            return(hargatotal)
+        }
+        //Pakaian
+        function menuPakaian(){
+            showMenuPakaian()
+        pilihMenuPakaian = prompt(`Pakaian Yang Tersedia \n\n ${menu}  `)
+        inputMenuPakaian()
+        if (pilihMenuPakaian == tokoClothing.length+1){
+            menuDaftarKeranjangPakaian()
+        }
+        if(pilihMenuPakaian == tokoClothing.length+2){
+            menuCheckoutPakaian()
+        }
+        }
+        function showMenuPakaian(){
+            menu = ''
+            for (let i = 0 ; i < tokoClothing.length; i++){
+            menu += `${i+1} ${tokoClothing[i].nama} Rp${tokoClothing[i].harga} ${tokoClothing[i].stok} /pcs Size ${tokoClothing[i].size}\n`
+        } alert(menu) 
+        }
+        function inputMenuPakaian(){
+            inputUserMenuIndex = pilihMenuPakaian-1
+            if (pilihMenuPakaian <= tokoClothing.length){
+                do{
+                    kosong = parseInt(prompt(`Beli ${tokoClothing[inputUserMenuIndex].nama} Berapa`))
+                    temp += kosong
+                    if (temp  <= tokoClothing[inputUserMenuIndex].stok){
+                        tokoClothing[inputUserMenuIndex].input += kosong
+                        tokoClothing[inputUserMenuIndex].stok -= tokoClothing[inputUserMenuIndex].input
+                        kondisi = true
+                        kondisi2 = false
+                    }else{
+                        alert("Mohon Maaf Stok yang anda masukkan terlalu banyak")
+                        temp = 0
+                        kondisi2 = true
+                        }
+        }while (kondisi2)
+    }
+        }
+        function totalHargaPakaian(){
+            hargatotal = 0
+            for(let i = 0; i< tokoClothing.length; i++){
+                hargatotal += tokoClothing[i].harga * tokoClothing[i].input
+            }
+            return(hargatotal)
+        }
+        
+        // HP
+        function menuHp(){
+        showMenuHp()
+        piliMenuHP = prompt(`HP Yang Tersedia \n\n ${menu} `)
+        inputMenuHP()
+        if (piliMenuHP == tokoHP.length+1){
+            menuDaftarKeranjangHP()
+        }
+        if(piliMenuHP == tokoHP.length+2){
+            menuCheckoutHP()
+        }
+        }
+        function showMenuHp(){
+            menu = ''
+            for (let i = 0 ; i < tokoHP.length; i++){
+            menu += `${i+1} ${tokoHP[i].nama} Rp${tokoHP[i].harga} ${tokoHP[i].stok} /pcs Garansi ${tokoHP[i].garansi} Tahun\n`
+        } alert(menu) 
+        }
+        function inputMenuHP(){
+            inputUserMenuIndex = piliMenuHP-1
+            if (piliMenuHP <= tokoHP.length){
+                do{
+                    kosong = parseInt(prompt(`Beli ${tokoHP[inputUserMenuIndex].nama} Berapa`))
+                    temp += kosong
+                    if (temp  <= tokoHP[inputUserMenuIndex].stok){
+                        if(tokoHP[inputUserMenuIndex].garansi == 0){
+                            konfirmasi = confirm("HP sudah tidak bergaransi apakah anda tetap membeli?")
+                            if (konfirmasi){
+                                tokoHP[inputUserMenuIndex].input += kosong
+                                tokoHP[inputUserMenuIndex].stok -= tokoHP[inputUserMenuIndex].input
+                            }else{
+                                inputMenuHP()
+                            }
+                        }else{
+                        tokoHP[inputUserMenuIndex].input += kosong
+                        tokoHP[inputUserMenuIndex].stok -= tokoHP[inputUserMenuIndex].input
+                        }
+                        kondisi = true
+                        kondisi2 = false
+                    }else{
+                        alert("Mohon Maaf Stok yang anda masukkan terlalu banyak")
+                        temp = 0
+                        kondisi2 = true
+                        }
+        }while (kondisi2)
+    }
+        }
+        function totalHargaHP(){
+            hargatotal = 0
+            for(let i = 0; i< tokoHP.length; i++){
+                hargatotal += tokoHP[i].harga * tokoHP[i].input
+            }
+            return(hargatotal)
+        }
+        do{
+            
+            menuUtama()
+       }while(kondisiUtama)
+       </script>
+</body>
+</html>

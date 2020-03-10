@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let arrNamaItem = ["1. Jeruk", "2. Mangga", "3. Durian"]
+        let keluar = "4. Checkout"
+        let arrStok = [10, 5, 4]
+        let arrHarga = [1000, 2000, 5000]
+        let beli =[0, 0, 0]
+        let a = ''
+        let input, Menu, kondisi, kondisi2
+
+       
+        for (let i = 0; i < arrNamaItem.length; i++){
+            a += (arrNamaItem[i]+ " Harga " + arrHarga[i] + " Stok " + arrStok[i] + " \n")
+        }
+        do {
+        input = parseInt(prompt(`${a}${keluar} 
+        Masukkan Pilihan`))
+        for (j = 0; j < arrNamaItem ; j++){
+            if(input-1 == j ){
+            
+            beli[j] = parseInt(prompt("Beli Berapa Buah Jeruk?"))
+            if (beli[j] <= arrStok[j]){
+            kondisi = true
+            kondisi2 = false
+            }else{
+                alert("Jumlah Stok Terlalu Banyak")
+                kondisi2 = true
+            }
+        
+            } else{
+                alert("slah")
+            }
+        }    
+
+
+        }while(kondisi)
+        
+        
+        </script>
+</body>
+</html>

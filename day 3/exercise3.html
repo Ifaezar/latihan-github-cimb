@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      
+        let jjeruk = 5 
+        let jmangga = 4 
+        let jdurian = 2 
+        let jsemangka = 7 
+        
+        let hjeruk = 4000
+        let hmangga = 6000
+        let hdurian = 10000
+        let hsemangka = 3000
+        do{
+        alert(`        Jeruk Harga Rp${hjeruk} Stok yang tersedia ${jjeruk}
+        Mangga Harga Rp${hmangga} Stok yang tersedia ${jmangga}
+        Durian Harga Rp${hdurian} Stok yang tersedia ${jdurian}
+        Semangka Harga Rp${hsemangka} Stok yang tersedia ${jsemangka}`)    
+        
+         let j = parseInt(prompt("Jumlah jeruk yang Mau dibeli"))
+        if (j > jjeruk){
+            alert("Stok jeruk tidak tersedia")
+            kondisi = true
+        }else{
+           let m = parseInt(prompt("Jumlah mangga yang Mau dibeli"))
+            if (m > jmangga){
+                alert("Stok mangga tidak tersedia")
+                kondisi = true
+            }else{
+               let d = parseInt(prompt("Jumlah durian yang Mau dibeli"))
+                if(d > jdurian){
+                    alert("Stok durian tidak tersedia")
+                    kondisi = true
+                }else{
+                   let s = parseInt(prompt("Jumlah semangka yang Mau dibeli"))
+                    if(s > jsemangka){
+                        alert("Stok semangka tidak tersedia")
+                        kondisi = true
+                    }else{
+                        let kondisiBayar = true
+                        let totalj = j * hjeruk
+                        let totalm = m * hmangga
+                        let totald = d * hdurian
+                        let totals = s * hsemangka
+                        do{
+                        let total = parseInt(totalj + totalm + totald + totals)
+                        alert ("Jumlah yang harus dibayar adalah sebesar Rp " +total)
+                        let uang = parseInt(prompt("Masukkan jumlah uang anda"))
+                        
+                            if (total < uang ){
+                        let bayar = uang - total 
+                         alert("Terima Kasih sudah membeli, kembalian anda sebesar Rp " +bayar)
+                         kondisiBayar = false
+                          } else if(total == uang){
+                        alert("Terima Kasih sudah membeli")
+                        kondisiBayar = false
+                         }else{
+                        let kurang = total - uang
+                        alert("Mohon maaf uang anda kurang Rp " +kurang)
+                        kondisiBayar = true
+                        }
+                        }while(kondisiBayar)
+                        
+                        let konfirmasi = confirm("Apakah ingin membeli lagi?")
+                        if (konfirmasi == true)
+                        {
+                            jjeruk = jjeruk - j
+                            jmangga = jmangga - m
+                            jdurian = jdurian - d
+                            jsemangka = jsemangka - s
+                            alert(`                     Sisa Stok Jeruk = ${jjeruk}
+                            Sisa Stok Mangga ${jmangga}
+                            Sisa Stok Durian ${jdurian}
+                            Sisa Stok Semangka ${jsemangka}`)
+                            if(jjeruk == 0 && jmangga == 0 && jdurian == 0 && jsemangka == 0){
+                                alert("Mohon Maaf Sisa Stok semua telah habis")
+                                kondisi = false
+                            }else{
+                                kondisi = true
+                            }
+                          
+                        }else{
+                            kondisi = false
+                        }    
+                    }
+                }
+            }
+        }
+        
+}while(kondisi)
+
+        </script>
+</body>
+</html>

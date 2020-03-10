@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let menu=''
+        let nota=''
+        let pilihMenu, kondisi, kondisi2, kondisi3, Bayar, konfirmasi
+        let kosong = 0 
+        let temp = 0
+        let Harga = 0
+       
+        let inputUserMenuIndex, memilihMenu, choose
+       let arrData = [
+            {buah : "Jeruk", stok : 10, harga : 1000, beli : 0, totalPerBuah : 0 },
+             {buah : "Mangga", stok : 5, harga : 5000, beli : 0, totalPerBuah : 0 },
+             {buah : "Durian", stok : 7, harga : 10000, beli : 0, totalPerBuah : 0 }
+        ]
+do{
+        MenuFunction()
+        do{
+                pilihMenu = prompt(`Buah Yang tersedia\n${menu} ${arrData.length +1}.Checkout\n ${arrData.length+2}.Daftar Belanja
+                Silhakan pilih`)
+                    choosemenu()
+                if(pilihMenu == arrData.length + 1){
+                    CheckoutFunction()
+                    Harga = 0
+                }      
+                if (pilihMenu == arrData.length + 2){
+                    daftarKeranjang()
+                    nota = ''
+                }
+            }while(kondisi)
+            konfirmasi = confirm("Apakah anda mau membeli lagi?")
+}while(konfirmasi)
+
+function MenuFunction(){
+    do{
+    memilihMenu = prompt("1. Admin \n 2. User")
+    if (memilihMenu == 1){
+            add()
+            kondisi = true
+    }else {
+        menuUtama()
+        kondisi = false
+    }
+}while (kondisi)
+
+}
+function add(){
+    choose = prompt("1. Tambah Item \n 2. Back")
+            if (choose == 1)
+            {arrData.push({
+                buah: prompt("Masukkan Nama Buah"),
+                stok: prompt("Masukkan Jumlah Stok"),
+                harga: prompt("Masukkan Harga Buah"),
+                beli: 0,
+                totalPerBuah:0
+            })}else {
+                MenuFunction()
+            }
+}
+function menuUtama(){
+    menu = ''
+    for (let i = 0 ; i < arrData.length; i++){
+            menu += `${i+1}. Buah ${arrData[i].buah} Stok ${arrData[i].stok}/pcs Harga ${arrData[i].harga} \n`
+        }  
+       alert(menu)
+   
+
+}
+function choosemenu(){
+    inputUserMenuIndex = pilihMenu-1
+    
+    if (pilihMenu <= arrData.length){
+        do{
+            kosong = parseInt(prompt(`Beli ${arrData[inputUserMenuIndex].buah} Berapa`))
+                        temp += kosong
+                        if (temp  <= arrData[inputUserMenuIndex].stok){
+                            arrData[inputUserMenuIndex].beli += kosong
+                            kondisi = true
+                            kondisi2 = false
+                        }else{
+                            alert("Mohon Maaf Stok yang anda masukkan terlalu banyak")
+                            temp = 0
+                            kondisi2 = true
+                        }
+        }while (kondisi2)
+    }
+}
+function CheckoutFunction(){
+    if (Harga == 0){
+        alert("silahkan ke menu daftar keranjang untuk melihat daftar belanja anda")
+        kondisi = true
+    }else{
+    alert(`Total yang harus dibayar Rp${Harga}`)
+                    do{
+                    Bayar = parseInt(prompt("Silahkan Masukkan Jumlah Uang Anda"))
+                        if (Bayar < Harga){
+                            alert(`Mohon Maaf Uang Anda Kurang Rp${Bayar-Harga}`)
+                            Harga = 0
+                            kondisi3 = true
+                            kondisi = false
+                        }else if (Bayar > Harga){
+                            alert(`Terima Kasih sudah membeli , kembalian anda Rp${Bayar-Harga}`)
+                            Harga = 0
+                            kondisi3 = false
+                            kondisi = false
+                        }else if(Bayar == Harga){
+                            alert("Terima Kasih sudah membeli")
+                            kondisi3 = false
+                        }
+                    }while (kondisi3)
+                    
+         }   
+         Harga = 0    
+         return Harga
+}
+function daftarKeranjang(){
+                    for (j = 0; j < arrData.length; j++){
+                        arrData[j].totalPerBuah += (arrData[j].beli * arrData[j].harga)
+                        Harga += arrData[j].totalPerBuah
+                        arrData[j].stok -= arrData[j].beli
+                        if (arrData[j].beli > 0){
+                        nota += (`${arrData[j].buah} ${arrData[j].totalPerBuah} (${arrData[j].beli} pcs)\n`)
+                        arrData[j].totalPerBuah = 0
+                        }
+                    }
+                    if (nota){
+                    alert(`Daftar Belanja\n\n\n ${nota}\n Harga Total = ${Harga } `)
+                    }else{
+                        alert("anda belum membeli")
+                    }
+                    nota = ''
+                    kondisi = true
+}        
+        </script>
+</body>
+</html>

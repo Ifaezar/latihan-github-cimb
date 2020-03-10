@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let menu=''
+        let nota=''
+        let pilihMenu, kondisi, kondisi2, kondisi3, Bayar, konfirmasi
+        let kosong = 0 
+        let temp = 0
+        let Harga = 0
+
+
+       let arrData = [
+            {buah : "Jeruk", stok : 10, harga : 1000, beli : 0 },
+             {buah : "Mangga", stok : 5, harga : 5000, beli : 0 },
+             {buah : "Durian", stok : 7, harga : 10000, beli : 0 }
+        ]
+do{
+        for (let i = 0 ; i < arrData.length; i++){
+            menu += `${i+1}. Buah ${arrData[i].buah} Stok ${arrData[i].stok}/pcs Harga ${arrData[i].harga} \n`
+            
+        }  
+       alert(menu)
+        do{
+                
+                pilihMenu = prompt(`Buah Yang tersedia\n${menu} ${arrData.length +1}.Checkout\n ${arrData.length+2}.Daftar Belanja
+                Silhakan pilih`)
+                for (let j = 0; j < arrData.length; j++){
+                   
+                    if(pilihMenu-1 == j){
+                        do{
+                            
+                        kosong = parseInt(prompt(`Beli ${arrData[j].buah} Berapa`))
+                        temp += kosong
+                        if (temp  <= arrData[j].stok){
+                            arrData[j].beli += kosong
+                            
+                            kondisi = true
+                            kondisi2 = false
+                        }else{
+                            alert("Mohon Maaf Stok yang anda masukkan terlalu banyak")
+                            temp = 0
+                            kondisi2 = true
+                            
+                        }
+                        }while(kondisi2)
+                    }
+                }
+                if(pilihMenu == arrData.length + 1){
+                    
+                    
+                    
+                    alert(`Total yang harus dibayar Rp${Harga}`)
+                    
+                    do{
+                    Bayar = parseInt(prompt("Silahkan Masukkan Jumlah Uang Anda"))
+                        if (Bayar < Harga){
+                            alert(`Mohon Maaf Uang Anda Kurang Rp${Bayar-Harga}`)
+                            Harga = 0
+                            kondisi3 = true
+                            kondisi = false
+                        }else if (Bayar > Harga){
+                            alert(`Terima Kasih sudah membeli , kembalian anda Rp${Bayar-Harga}`)
+                            Harga = 0
+                            kondisi3 = false
+                            kondisi = false
+                        }else if(Bayar == Harga){
+                            alert("Terima Kasih sudah membeli")
+                            kondisi3 = false
+                        }
+                    }while (kondisi3)
+                
+                }      
+                if (pilihMenu == arrData.length + 2){
+                    for (j = 0; j < arrData.length; j++){
+                        Harga = Harga + (arrData[j].beli * arrData[j].harga)
+                        arrData[j].stok -= arrData[j].beli
+                    }
+                    
+                    for (let k = 0; k < arrData.length; k++){
+                        if (arrData[k].beli > 0){
+                        nota += (`${arrData[k].buah} ${Harga} (${arrData[k].beli} pcs)\n`)
+                        }
+                    }
+                    if (nota){
+                    alert(`Daftar Belanja\n\n\n ${nota}\n Harga Total = ${Harga } `)
+                    }else{
+                        alert("anda belum membeli")
+                    }
+                    
+                    
+                    harga = 0
+                    for(j = 0;j < arrData.length; j++){
+                        arrData[j].beli = 0
+                    }
+                    kondisi = true
+                }          
+            }while(kondisi)
+            
+            menu = ''
+            nota =''
+            konfirmasi = confirm("Apakah anda mau membeli lagi?")
+}while(konfirmasi)
+      
+        
+        </script>
+</body>
+</html>

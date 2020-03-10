@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let arrNameItem = ["Apel", "Mangga", "Durian"]
+        let arrStock = [10, 10, 10]
+        let arrHarga = [1000, 2000, 3000]
+        let jumlahBeli = [0, 0, 0]
+        let menu = ''
+        let kondisi, pilihMenu, kondisi2, kondisi3, Bayar, konfirmasi, Membayar, kurang
+        let Harga = 0
+        let kosong = 0 
+        let temp = 0
+      
+        
+        do{
+        for(let i = 0; i < arrNameItem.length; i++){
+            
+            menu += `${i+1}. ${arrNameItem[i]} Harga Rp${arrHarga[i]} Stok yang Tersedia ${arrStock[i]} \n`
+            
+        }
+        // alert(menu)
+        
+        do{
+                
+                pilihMenu = prompt(`Buah Yang tersedia\n${menu} ${arrNameItem.length +1}.Checkout
+                Silhakan pilih`)
+                for (let j = 0; j < arrNameItem.length; j++){
+                   
+                    if(pilihMenu-1 == j){
+                        do{
+                            
+                        kosong = parseInt(prompt(`Beli ${arrNameItem[j]} Berapa`))
+                        temp += kosong
+                        if (temp  <= arrStock[j]){
+                            jumlahBeli[j] += kosong
+                            
+                            kondisi = true
+                            kondisi2 = false
+                        }else{
+                            alert("Mohon Maaf Stok yang anda masukkan terlalu banyak")
+                            temp = 0
+                            kondisi2 = true
+                            
+                        }
+                        }while(kondisi2)
+                    }
+                }
+                if(pilihMenu == arrNameItem.length + 1){
+                    
+                    for (j = 0; j < arrNameItem.length; j++){
+                        Harga = Harga + (jumlahBeli[j] * arrHarga[j])
+                        arrStock[j] -= jumlahBeli[j]
+                    }
+                    
+                    alert(`Total yang harus dibayar Rp${Harga}`)
+                    do{
+                    Bayar = parseInt(prompt("Silahkan Masukkan Jumlah Uang Anda"))
+                    
+                        if (Bayar < Harga){
+                            alert(`Mohon Maaf Uang Anda Kurang Rp${Bayar-Harga}`)
+                            jumlahBeli.fill(0)
+                            Harga = 0
+                            kondisi3 = true
+                            kondisi = false
+                        }else if (Bayar > Harga){
+                            alert(`Terima Kasih sudah membeli , kembalian anda Rp${Bayar-Harga}`)
+                            jumlahBeli.fill(0)
+                            Harga = 0
+                            kondisi3 = false
+                            kondisi = false
+                        }else if(Bayar == Harga){
+                            alert("Terima Kasih sudah membeli")
+                            
+                            kondisi3 = false
+                        }
+                    }while (kondisi3)
+                
+                }                
+            }while(kondisi)
+            
+            menu = ''
+            
+            konfirmasi = confirm("Apakah anda mau membeli lagi?")
+
+        } while(konfirmasi)
+        </script>
+</body>
+</html>

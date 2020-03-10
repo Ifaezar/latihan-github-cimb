@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        let jjeruk = 5
+        let jmangga = 4
+        let jdurian = 2
+        let jsemangka = 7
+
+        let hjeruk = 4000
+        let hmangga = 6000
+        let hdurian = 10000
+        let hsemangka = 3000
+
+        alert("jeruk   " + hjeruk +" "+ jjeruk + "\n mangga   " + hmangga +" " + jmangga +"\n durian   " + hdurian +" " + jdurian + "\n Semangka   " + hsemangka + " " + jsemangka )
+        
+        let j = parseInt(prompt("Jumlah jeruk yang Mau dibeli"))
+        let m = parseInt(prompt("Jumlah mangga yang Mau dibeli"))
+        let d = parseInt(prompt("Jumlah durian yang Mau dibeli"))
+        let s = parseInt(prompt("Jumlah semangka yang Mau dibeli"))
+
+
+        if ((j <= jjeruk) && (m <= jmangga) && (d <= jdurian) && (s <= jsemangka)){
+        let totalj = j * hjeruk
+        let totalm = m * hmangga
+        let totald = d * hdurian
+        let totals = s * hsemangka
+        let total = parseInt(totalj + totalm + totald + totals)
+        alert ("Jumlah yang harus dibayar adalah sebesar Rp " +total)
+        let uang = parseInt(prompt("Masukkan jumlah uang anda"))
+    
+        if (total < uang ){
+            let bayar = uang - total 
+            alert("Terima Kasih sudah membeli, kembalian anda sebesar Rp " +bayar)
+        } else if(total == uang){
+            alert("Terima Kasih sudah membeli")
+        }else{
+            let kurang = total - uang
+            alert("Mohon maaf uang anda kurang Rp " +kurang)
+        }
+        } else (
+            alert("Stok telah habis")
+        )   
+        
+        </script>
+</body>
+</html>

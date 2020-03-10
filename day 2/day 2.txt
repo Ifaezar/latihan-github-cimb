@@ -1,0 +1,4 @@
+menampilkan output bisa enter menggunakan
+
+`angka ${angka1}  angka ${angka2} sama dengan
+${total} `
