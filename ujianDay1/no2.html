@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let angka = []
+    let kondisi = true
+    let huruf = 'abcdefghijklmnopqrstuvwxyz'
+    let inputAngka =[]
+    inputAngka = prompt("Masukkan angka")
+    let banding, string, newNumber
+    while(kondisi){
+        banding = inputAngka.split("")
+        for(let i = 0; i < inputAngka.length; i++){
+            for(let j = 0; j < huruf.length; j++){
+                if(banding[i].toLowerCase() == huruf[j].toLowerCase()){ 
+                    string = true
+                }
+            }
+        }
+        if(string == true){
+            console.log(angka)
+            kondisi = false
+        }else{
+            newNumber = parseInt(inputAngka)
+            angka.push(newNumber)
+            inputAngka = prompt("Masukkan angka")
+            kondisi = true
+        }
+    }
+
+    let max = 0
+    let min = 9999
+    let temp
+    for (let i = 0; i < angka.length; i++){
+        for(let j = 0 ; j < angka.length; j++){
+            if(angka[i] < angka[j]){
+                temp = angka[i]
+                angka[i] = angka[j]
+                angka[j] = temp
+            }
+        }
+    }
+    console.log(`angka setelah diurutkan ${angka}`)
+
+    for(let i = 0; i < angka.length; i++){
+        if(max < angka[i]){
+            max = angka[i]
+        }else{
+            max = max
+        }
+        if(min > angka[i]){
+            min = angka[i]
+        }else{
+            min = min
+        }  
+    }
+    console.log(`Angka Tertinggi ${max}`)
+    console.log(`Angka Terendah ${min}`)
+
+</script>
+</html>

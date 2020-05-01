@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Challenge - Unicorn</title>
+
+    <style>
+        table, th, tr, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+          padding: 12px;
+        }
+      </style>
+</head>
+<body>
+    <table id="arrData">
+    </table>
+    <br>
+    <input type="number" id="rotateCount">
+    <input type="button" onclick="rotate(document.getElementById('rotateCount').value, 1)" value="ROTATE LEFT">
+    <input type="button" onclick="rotate(document.getElementById('rotateCount').value, 2)" value="ROTATE RIGHT">
+    <br><br>
+    <input type="button" onclick="resetData()" value="RESET">
+</body>
+<script>
+    var arrData = [[1,2,3,4], [5,6,7,8], [9,10,11,12], [13,14,15,16]]
+    var switchHorizontal = [false,false,false,false]
+    var switchVertical = [false,false,false,false]
+
+    const renderArray = () => {
+        console.log(arrData)
+        result = ""
+        for (let i = 0; i < arrData.length; i++) {
+            result += "<tr>"
+            for (let j = 0; j < arrData[i].length; j++) {
+                result += "<td>" + arrData[i][j] + "</td>"
+            }
+            result += `<td><input type='button' value='Sort' onclick='sortHorizontal(${i})'></tr>`
+        }
+        result += "<tr>"
+        for (let i = 0; i < arrData[0].length; i++) {
+            result += `<td><input type='button' value='Sort' onclick='sortVertical(${i})'></td>` 
+        }
+        result += "</tr>"
+        document.getElementById("arrData").innerHTML = result
+    }
+
+    const sortHorizontal = (row) => {
+        if (switchHorizontal[row]) {
+            arrData[row].sort((a, b) => a - b)
+        }
+        else {
+            arrData[row].sort((a, b) => b - a)
+        }
+        switchHorizontal[row] = !switchHorizontal[row]
+        renderArray()
+    }
+
+    const sortVertical = (col) => {
+        let arrTemp = []
+        for (let i = 0; i < arrData.length; i++) {
+            arrTemp.push(arrData[i][col])
+        }
+
+        if (switchVertical[col]) {
+            arrTemp.sort((a, b) => a - b)
+        }
+        else {
+            arrTemp.sort((a, b) => b - a)
+        }
+
+        for (let i = 0; i < arrData.length; i++) {
+            arrData[i][col] = arrTemp[i]
+        }
+
+        switchVertical[col] = !switchVertical[col]
+        renderArray()
+    }
+
+    const rotate = (count, type) => {
+        if (type == 1) {
+            count *= 3
+        }
+
+        for (let i = 0; i < count; i++) {
+            arrTemp = [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]]
+            for(let i = 0; i < arrData.length; i++){
+                for(let j = 0; j < arrData.length; j++){
+                    if(i == 0 && j == 0){
+                        arrTemp[i][j+3] = arrData[i][j]
+                    }else if(i == 0){
+                        arrTemp[i+j][3] = arrData[i][j]
+                    }else if(j == 3){
+                        arrTemp[3][j-i] = arrData[i][j]
+                    }else if(i == 3){
+                        arrTemp[j][j-j] = arrData[i][j]
+                    }else if(j == 0){
+                        arrTemp[j][3-i] = arrData[i][j]
+                    }
+                    else if(i == 1 && j == 1) {
+                        arrTemp[i][j+1] = arrData[i][j]
+                    }
+                    else if (i == 1 && j == 2) {
+                        arrTemp[i+1][j] = arrData[i][j]
+                    }
+                    else if (i == 2 && j == 1) {
+                        arrTemp[i-1][j] = arrData[i][j]
+                    } 
+                    else if (i == 2 && j == 2) {
+                        arrTemp[i][j-1] = arrData[i][j]
+                    }
+                }
+            }
+            arrData = arrTemp
+        }
+        renderArray()
+    }
+
+    const resetData = () => {
+        document.getElementById("rotateCount").value = ""
+        arrData = [[1,2,3,4], [5,6,7,8], [9,10,11,12], [13,14,15,16]]
+        renderArray()
+    }
+
+    renderArray()
+</script>
+</html>

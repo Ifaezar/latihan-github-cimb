@@ -21,6 +21,8 @@
                 <th onclick="sortDataNama()"><strong> Nama</strong></th>
                 <th onclick="sortDataPekerjaan()">Pekerjaan</th>
                 <th onclick="sortDataUmur()">Umur</th>
+                <th>Jenis Kelamin</th>
+                <th>Biodata</th>
                 <th>Picture</th>
             </tr>
         </thead>
@@ -33,6 +35,14 @@
                     <td><input id ="inputNama" type="text" placeholder="Input Nama"></td>
                     <td><input id ="inputPekerjaan" type="text" placeholder="Input Pekerjaan"></td>
                     <td><input id ="inputUmur" type="number" placeholder="Input Umur"></td>
+                    <td><input id ="inputJenisKelaminPria" name="jk" type="radio" value="Laki-Laki" checked>Laki-Laki
+                    <input id ="inputJenisKelaminPerempuan" name="jk" type="radio" value="Perempuan" checked> Perempuan</td>
+                    <td><textarea
+                        name="Area" onkeyup="onBioCount()" id ="inputBiodata" type="text" placeholder="Input Biodata"></textarea>>
+                        <span id="Now">0</span>
+                        <span>/ 30</span>      
+                    </td>
+
                     <td><input id ="inputPicture" type="text" placeholder="Input Picture Link"></td>
                     <td><input id = "submit" onclick="addData()" type="button" value="Submit"></td>
             </tr>
@@ -45,31 +55,35 @@
 </body>
     <script>
         class Orang {
-            constructor(nama, pekerjaan, umur, picture){
+            constructor(nama, pekerjaan, umur, jenisKelamin, biodata, picture){
                 this.nama = nama
                 this.pekerjaan = pekerjaan
                 this.umur = umur
+                this.jenisKelamin = jenisKelamin
+                this.biodata = biodata
                 this.picture = picture
             }
         }
 
         let dataOrang = [
-            new Orang("Luffy", "Pelaut", 20,"https://fajar.co.id/wp-content/uploads/2018/01/monkey_d_luffy_after_timeskip__paint__by_twin_gamer-d4ez19r.jpg"),
-            new Orang("Law", "CEO", 22,"https://i.pinimg.com/originals/f4/bb/ce/f4bbce5b0fb84a8fc543b2c338214233.png"),
-            new Orang("Zoro", "Navigator", 21,"https://www.greenscene.co.id/wp-content/uploads/2020/03/zoro-696x497.jpg")
+            new Orang("Luffy", "Pelaut", 20, "Laki-Laki", "Saya adalah seorang Bajak Laut", "https://fajar.co.id/wp-content/uploads/2018/01/monkey_d_luffy_after_timeskip__paint__by_twin_gamer-d4ez19r.jpg"),
+            new Orang("Law", "CEO", 22, "Laki-Laki", "Saya adalah seorang Bajak Laut", "https://i.pinimg.com/originals/f4/bb/ce/f4bbce5b0fb84a8fc543b2c338214233.png"),
+            new Orang("Zoro", "Navigator", 21, "Perempuan", "Saya adalah seorang Bajak Laut", "https://www.greenscene.co.id/wp-content/uploads/2020/03/zoro-696x497.jpg")
         ]
         let kondisi
         let a = 0
         let b = 1
-
+        let inputJenisKelamin
         const renderData = () =>{
             let hasil = ''
-            dataOrang.forEach(({ nama, pekerjaan, umur, picture }, index) => {
+            dataOrang.forEach(({ nama, pekerjaan, umur, jenisKelamin, biodata, picture }, index) => {
                 hasil += `
                 <tr>
                     <td>${nama}</td>
                     <td>${pekerjaan}</td>
                     <td>${umur}</td>
+                    <td>${jenisKelamin}</td>
+                    <td>${biodata}</td>
                     <td><img src=${picture} width = "100px"></td>
                     <td><input type="button" value="Delete" onclick = "deleteData(${index})"> </td>
                 </tr>`
@@ -78,22 +92,38 @@
         }
 
         const addData = () => {
+            
             let inputNama = document.getElementById("inputNama").value
             let inputPekerjaan = document.getElementById("inputPekerjaan").value
             let inputUmur = document.getElementById("inputUmur").value
+            let inputBiodata = document.getElementById("inputBiodata").value
+            
+            if (inputBiodata.length > 30){
+                inputBiodata =  inputBiodata.slice(0,30) + "..."
+            }
+            if(document.getElementById("inputJenisKelaminPerempuan").checked)
+            {
+                inputJenisKelamin = document.getElementById("inputJenisKelaminPerempuan").value
+            }else{
+                inputJenisKelamin = document.getElementById("inputJenisKelaminPria").value
+            }
             let inputPicture = document.getElementById("inputPicture").value
-            if (inputPekerjaan == '' || inputNama == '' || inputUmur == '' || inputPicture == ''){
+            if (inputPekerjaan == '' || inputNama == '' || inputUmur == '' || inputPicture == '' || inputBiodata ==''){
                 document.getElementById("formWarning").innerHTML = "Field tidak boleh kosong"
             }else{
-            let newData = new Orang(inputNama, inputPekerjaan, inputUmur, inputPicture)
+            let newData = new Orang(inputNama, inputPekerjaan, inputUmur, inputJenisKelamin, inputBiodata, inputPicture)
             dataOrang.push(newData)
             alert("Data Berhasil Ditambah")
+            document.getElementById("inputJenisKelaminPria").checked  ="false"
+            document.getElementById("inputJenisKelaminPerempuan").checked  ="false"
             document.getElementById("formWarning").innerHTML = ''
             document.getElementById("emptyTable").innerHTML =''
+            document.getElementById("inputBiodata").value =''
             document.getElementById("inputNama").value = ''
             document.getElementById("inputPekerjaan").value = ''
             document.getElementById("inputUmur").value = ''
             document.getElementById("inputPicture").value = ''
+            document.getElementById("Now").innerHTML = 0
             renderData()
             }
         }
@@ -154,7 +184,10 @@
             }while (kondisi)
         }
         renderData()
-
-        // jawaban lebih simple ada di github
+        
+        const onBioCount = () =>{
+            let hitungBio = document.getElementById("inputBiodata").value
+            document.getElementById("Now").innerHTML = (hitungBio.length)
+        }
     </script>
 </html>

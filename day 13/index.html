@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+    table, tr, td, th{
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 10pt;
+        }
+     fieldset{
+         width: 800px;
+     }   
+     th{
+         background-color:chartreuse
+     }
+    </style>
+        <fieldset id="filter">
+            <legend>Filter</legend>
+            <p>Nama: <input onkeyup="filterData()" id="name" type="text"></p>
+            <p>Harga: <input onkeyup="filterData()" id="minPrice" type="number"> - <input onkeyup="filterData()"  id="maxPrice" type="number"></p>
+            <p>Category: <select onchange="filterData()" id="category">
+                    <option value="">ALL</option>
+                    <option value="Buah">Buah</option>
+                    <option value="Elektronik">Elektronik</option>
+                    <option value="FastFood">Fast Food</option>
+                    <option value="Cloth">Cloth</option>
+            </select>
+            
+        </fieldset>
+
+        <fieldset id="input">
+                <legend>Input Data</legend>
+                <table id="input data">
+                    <tr>
+                        <td><input id ="inputNama" type="text" placeholder="Nama"></td>
+                        <td><input id ="inputHarga" type="number" placeholder="Harga"></td>
+                        <td>
+                            <select id="daftarCategory">
+                                <option value="">ALL</option>
+                                <option value="Buah">Buah</option>
+                                <option value="Elektronik">Elektronik</option>
+                                <option value="FastFood">Fast Food</option>
+                                <option value="Cloth">Cloth</option>
+                            </select>
+                        </td>
+                        <td><input id ="inputStok" type="number" placeholder="Stock"></td>
+                    </tr>
+                </table>
+                <p><input id = "input" onclick="addData()" type="button" value="Input"></p>
+                <p id="formWarning"></p>
+        </fieldset>
+
+        <fieldset id="Data">
+            <legend>Tabel Data</legend>
+            <table id="tabelData">
+                <thead id="tabelHeadData">
+                    <tr>
+                        <th><strong> ID</strong></th>
+                        <th>Category</th>
+                        <th>Nama</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Buy</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <tfoot id="tabelDaftarItem">
+
+                </tfoot>
+            </table>
+        </fieldset>
+
+        <fieldset id="Cart">
+                <legend>Cart</legend>
+                <table>
+                    <thead id="tabelHeadCart">
+                        <tr>
+                            <th><strong> ID</strong></th>
+                            <th>Category</th>
+                            <th>Nama</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelFootCart">
+
+                    </tbody>
+                </table>
+                <p><input id = "payment"  type="button" onclick="menuPayment()" value="Payment"></p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Payment</legend>
+                <h1>Transaction Detail</h1>
+                <p id="paymentDetail"> </p>
+            </fieldset>
+            
+</body>
+
+<script>
+    class Item {
+        constructor(paramID, paramOrganizer, paramNama, paramHarga, paramStok){
+            this.ID = paramID
+            this.Organizer = paramOrganizer
+            this.nama = paramNama
+            this.harga = paramHarga
+            this.stok = paramStok
+        }
+    } 
+    let date = new Date()
+    let daftarItem = [
+            new Item("120","Buah", "Mangga", 5000, 7),
+            new Item("121","Buah", "Apel", 1000, 8),
+            new Item("122", "Elektronik", "Laptop", 500000, 5),
+            new Item("123", "Elektronik", "HP", 100000, 4),      
+            new Item("124","Fast Food", "Burger", 50000, 6),
+            new Item("125", "Fast Food", "Ayam", 10000, 14),        
+            new Item("126", "Clothing", "Kaos", 10000, 5),
+            new Item("127", "Clothing", "Kemeja", 10000, 10),
+        ]
+        
+    
+    const menuTabel = (arr = daftarItem) =>{
+    let menu = ''
+    arr.forEach(({ ID, Organizer, nama, harga, stok}, index) =>{
+            menu += `
+            <table cellpadding = 10, border = 1 px >
+            <tr>
+            <td> ${ID} </td>
+            <td> ${Organizer} </td>
+            <td> ${nama} </td>
+            <td> ${harga} </td>
+            <td>${stok} </td>
+            <td><input id = "buy"  type="button" onclick = "beliData(${ID})" value="Add"> </td>
+            <td><input id = "edit"  type="button" value="Edit"> </td>
+            <td><input id = "delete"  type="button" onclick = "deleteData(${index}, ${ID}) " value="Delete"> </td>    
+            </table>    
+            </tr>`
+        })
+    document.getElementById("tabelDaftarItem").innerHTML = menu
+    }
+
+    const deleteData = (deleteIndex,id) => {
+        let idx = daftarItem.find((val) => val.id == id)
+        let isInCart = arrCart.find((val) => val.id == Item.id)
+        alert(`data ${daftarItem[deleteIndex].nama} sudah terhapus`)
+        daftarItem.splice(idx, 1)
+        menuTabel()
+        if(isInCart){
+            let idxCart = arrCart.findIndex((val) => val.id == isInCart.id)
+            let index = arrCart[idxCart].id
+            arrCart.splice(index,1)
+            renderCart()
+        }
+        // alert(`data ${daftarItem[deleteIndex].nama} sudah terhapus`)
+        // daftarItem.splice(deleteIndex, 1)
+        // menuTabel()
+        //     if (daftarItem == ''){
+        //         document.getElementById("emptyTable").innerHTML ="Data sudah kosong"
+        //     }
+    }
+
+    const addData = () =>{
+        let inputID = Math.ceil(Math.random()*100000)
+        let inputNama = document.getElementById("inputNama").value
+        let inputHarga = parseInt(document.getElementById("inputHarga").value)
+        let inputCategory = document.getElementById("daftarCategory").value
+        let inputStok = document.getElementById("inputStok").value
+        
+        if (inputNama && inputStok && inputHarga){
+            let newItem = new Item(inputID, inputCategory, inputNama, inputHarga, inputStok)
+            daftarItem.push(newItem)
+            alert(`Data ${newItem.nama} berhasil ditambah`)
+            document.getElementById("inputNama").value =''
+            document.getElementById("inputHarga").value =''
+            document.getElementById("inputStok").value =''
+            document.getElementById("formWarning").innerHTML = ""
+        }else{
+            document.getElementById("formWarning").innerHTML = "Data tidak boleh ada yang kosong"
+        }
+
+        menuTabel()
+    }
+    
+    const filterData = () => {
+        let searchHasil = []
+            let filterNama = document.getElementById("name").value
+            let filetrHargaMin = document.getElementById("minPrice").value
+            let filterHargaMax = document.getElementById("maxPrice").value
+            let filterCategory = document.getElementById("category").value
+            daftarItem.forEach((val) => {
+                let {nama, Organizer, harga} = val
+                if (!filterHargaMax){
+                    filterHargaMax =99999999999
+                }
+                if(nama.toLowerCase().startsWith(filterNama.toLowerCase()) &&
+                Organizer.toLowerCase().startsWith(filterCategory.toLowerCase()) &&
+                harga <= filterHargaMax && harga >= filetrHargaMin
+                ) {
+                    searchHasil.push(val)
+                }
+
+            })
+            menuTabel(searchHasil)
+        }
+
+    let arrCart = []
+
+
+    const beliData = (ID) => {
+        let Item = daftarItem.find((val) => val.ID == ID)
+        
+        let isInCart = arrCart.find((val) => val.ID == Item.ID)
+        
+        if(isInCart){
+            let idx = arrCart.findIndex((val) => val.ID == isInCart.ID)
+            if(arrCart[idx].input < arrCart[idx].stok){
+            arrCart[idx].input++
+            }else{
+            alert("mohon maaf stok telah habis")
+            }
+        }else{
+            let newItemCart = {
+                ...Item, 
+                input: 1
+            }
+            arrCart.push(newItemCart)
+        }
+        
+        renderCart()
+    }
+
+    const renderCart = () => {
+        let hasil = ''
+        arrCart.forEach((val, index) => {
+            let {ID, Organizer, nama, harga, input} = val
+            hasil += `
+            <tr>
+                <td>${ID}</td>
+                <td>${Organizer}</td>
+                <td>${nama}</td>
+                <td>${harga}</td>
+                <td>${input}</td>
+                <td><input type = "button" onclick = "deleteCart(${index})" value = "Delete"/></td>
+            </tr>
+            `
+        })
+        document.getElementById("tabelFootCart").innerHTML = hasil
+    }
+    
+    const deleteCart = (deleteIndexCart) => {
+        arrCart[deleteIndexCart].input -= 1
+        if(arrCart[deleteIndexCart].input ==0){
+        alert(`data ${arrCart[deleteIndexCart].nama} sudah terhapus`)
+        arrCart.splice(deleteIndexCart, 1)
+        }
+            renderCart()
+    }
+    
+    const menuPayment = () =>{
+        let menuPayment = ''
+        let totalHargaItem
+        let totalBayar = 0
+        arrCart.forEach((val) => {
+            let {Organizer, nama, harga, input} = val
+            totalHargaItem = harga*input
+            totalBayar += totalHargaItem
+            menuPayment += `${nama} ${input}/pcs total Rp${totalHargaItem} <br>
+            `
+        })
+        document.getElementById("paymentDetail").innerHTML = menuPayment
+        document.getElementById("paymentDetail").innerHTML += `Jumlah Total = Rp ${totalBayar}`
+
+    }
+    menuTabel(daftarItem)
+</script>
+</html>

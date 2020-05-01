@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+    table, tr, td, th{
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 10pt;
+        }
+     fieldset{
+         width: 800px;
+         
+
+     }   
+    </style>
+        <fieldset id="filter">
+            <legend>Filter</legend>
+            <p>Nama: <input id="name" type="text"></p>
+            <p>Harga: <input id="minPrice" type="text"> - <input id="maxPrice" type="text"></p>
+            <p>Category: <select id="category">
+                    <option value="">ALL</option>
+                    <option value="Buah">Buah</option>
+                    <option value="Elektronik">Elektronik</option>
+                    <option value="FastFood">Fast Food</option>
+                    <option value="Cloth">Cloth</option>
+            </select></p>
+        </fieldset>
+
+        <fieldset id="input">
+                <legend>Input Data</legend>
+                <table id="input data">
+                    <tr>
+                        <td><input id ="inputNama" type="text" placeholder="Nama"></td>
+                        <td><input id ="inputHarga" type="number" placeholder="Harga"></td>
+                        <td>
+                            <select id="">
+                                <option value="">ALL</option>
+                                <option value="inputBuah">Buah</option>
+                                <option value="inputElektronik">Elektronik</option>
+                                <option value="FastFood">Fast Food</option>
+                                <option value="Cloth">Cloth</option>
+                            </select>
+                        </td>
+                        <td><input id ="inputStock" type="number" placeholder="Stock"></td>
+                    </tr>
+                </table>
+                <p><input id = "input"  type="button" value="Input"></p>
+        </fieldset>
+
+        <fieldset id="Data">
+            <legend>Tabel Data</legend>
+            <table>
+                <thead id="tabelHeadData">
+                    <tr>
+                        <th><strong> ID</strong></th>
+                        <th>Category</th>
+                        <th>Nama</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Buy</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </fieldset>
+
+        <fieldset id="Cart">
+                <legend>Cart</legend>
+                <table>
+                    <thead id="tabelHeadCart">
+                        <tr>
+                            <th><strong> ID</strong></th>
+                            <th>Category</th>
+                            <th>Nama</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+                <p><input id = "payment"  type="button" value="Payment"></p>
+            </fieldset>
+
+            <fieldset>
+                <legend>Payment</legend>
+                <h1>Transaction Detail</h1>
+            </fieldset>
+</body>
+
+</html>

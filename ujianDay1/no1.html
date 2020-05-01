@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Drawing Tools</h1>
+    <p>1. Persegi </p>
+    <p>2. Segitiga Siku-Siku Rata Kiri </p>
+    <p>3. Segitiga Siku-Siku Rata Kanan </p>
+    <p>Jenis Bangunan: </p>
+    <p><input type="text" id="jenisBangunan"></p>
+    <p>Ukuran: </p>
+    <p><input type="text" id="Ukuran"></p>
+    <p><input type="button" onclick="drawingTools()" value="Lihat"></p>
+    <p id="tampilan"></p>
+</body>
+<script>
+
+    const persegi = (size) => {
+        let output= ""
+        for(let i = 0; i < size; i++){
+            for(let j = 0; j < size; j++){
+                output += "*"
+            }
+            output += "\n"
+        }
+            
+            console.log(output)
+    }
+
+    const segitigaRataKiri = (size) => {
+        let output = ''
+        for(let i = 0; i < size; i++){
+            for(let j = 0; j <= i; j++){
+                output += "*"
+                
+            }
+            output += '\n'
+        }
+            console.log(output)
+    }
+
+    const segitigaRataKanan = (size) => {
+        let output = ''
+        for(let i = size; i > 0; i--){
+            for(let j = 0; j <= size; j++){
+                if(j >= i){
+                output += "*"
+                }else{
+                output += " "
+                }
+            }
+            output += '\n'
+        }
+            console.log(output)
+    }
+
+    const drawingTools = () => {
+    let jenisBangunan = document.getElementById("jenisBangunan").value
+    let ukuran = parseInt(document.getElementById("Ukuran").value)
+    if(jenisBangunan == 1){
+        persegi(ukuran)
+        document.getElementById("jenisBangunan").value = ''
+        document.getElementById("Ukuran").value = ''
+    }else if(jenisBangunan == 2){
+        segitigaRataKiri(ukuran)
+        document.getElementById("jenisBangunan").value = ''
+        document.getElementById("Ukuran").value = ''
+    }else{
+        segitigaRataKanan(ukuran)
+        document.getElementById("jenisBangunan").value = ''
+        document.getElementById("Ukuran").value = ''
+    }
+    }
+</script>
+</html>
